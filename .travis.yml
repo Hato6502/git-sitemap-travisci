@@ -1,2 +1,15 @@
-script:
-  - echo "TEST"
+script: echo "Test commands here. "
+after_script:
+  - git checkout ${TRAVIS_BRANCH}
+  - git clone https://github.com/blue-hood/git-sitemap
+  - git-sitemap/git-sitemap | tee sitemap.xml
+  - git add sitemap.xml
+  - git commit -m "Updated sitemap.xml. [ci skip]"
+  - git push https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
+addons:
+  apt:
+    packages:
+      - recode
+env:
+  global:
+    secure: SbT9CuHjoATTd6L+kmPJlnlCL/bF2momex34jHneHvxca7NTegrrKBg3dDibnVRYDiSBi6C7ufXgGaEolyKfxZuxB1G1DiOcP+p/kq3nBhYtFBqkPWdr/nMnoEoZftt7+yvSwGAmbBHWsQ9d73mIEQ338z63cKt+RZxyFTnl5Dl4ozHxxdREsfadCcyoROpbSOScf21J2uupn2lFLyas2+sanZK8YsaYpKsAcjJJGztVg5mlqpZivFEHs9ijgOa1N4sFhR8kNFM8Jw8EjM7eiMRRehMihziKoKrxxRuQsOKQVEFW9wqKzgWu+lrU+HT4wzH6aaL8sPHWNgssC1Rw6ElxeImH27o0PYNrIP1RM9vHhi3H/kE7ib/f667kJRURy5vEpX/3Hp1IOx1H6EhbFiawnbv0/eo5qd2/NqwY5D5G3dlhbmyhrR30TM/Rmb9EHvrqXORHib5l+p6ycT3m2lnQp0t3upb2sJtwk80DfWErphZ0KOcl1wm8MbTU852sc0beMqV4s3pjnItr52XHwYsoq7eqcd9LPVXLPxsaLb1DqIbu9D5II2NbvAOZDlvcjj5st0rYFGmPz2SEeQBqW6Zs60BnEEQjpTfKE1IZeJJfF06yUj8w35vMmpm7qUZPGgTamyvEWLyzRExazENv37HvE2weRPjZ3hqLCtDY/b0=
